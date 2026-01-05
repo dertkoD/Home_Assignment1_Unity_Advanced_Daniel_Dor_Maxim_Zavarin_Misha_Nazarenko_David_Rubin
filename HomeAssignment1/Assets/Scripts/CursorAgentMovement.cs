@@ -10,6 +10,9 @@ public class CursorAgentMovement : MonoBehaviour
     [SerializeField] private List<NavMeshAgent> agents = new List<NavMeshAgent>(); 
     [SerializeField] private Camera cam;
 
+    private HashSet<NavMeshAgent> arrivedAgents = new(); // registry of arrived agents
+    private bool hasClicked;
+
     private void Start()
     {
         if (!cam)
@@ -33,6 +36,8 @@ public class CursorAgentMovement : MonoBehaviour
                     SetAgentsMovement(hit.point);
                 }
             } 
+            
+            if (hasClicked) CheckArrival();
         }
        
     }
@@ -40,6 +45,10 @@ public class CursorAgentMovement : MonoBehaviour
     //Set destination foreach agent
     private void SetAgentsMovement(Vector3 finish)
     {
+        hasClicked = true; // flag to only display the arrival log after the user command
+        
+        arrivedAgents.Clear();
+        
         foreach (var ag in agents)
         {
             ag.SetDestination(finish);
@@ -59,5 +68,22 @@ public class CursorAgentMovement : MonoBehaviour
                
         }
         return true;
+    }
+    
+    //Check if every agent arrived at destination and display a log message
+    private void CheckArrival()
+    {
+        foreach (var ag in agents)
+        {
+            if (arrivedAgents.Contains(ag))
+                continue;
+
+            if (!ag.pathPending && ag.remainingDistance <= ag.stoppingDistance && 
+                (!ag.hasPath || ag.velocity.sqrMagnitude == 0f))
+            {
+                arrivedAgents.Add(ag);
+                Debug.Log($"{ag.name} arrived at destination");
+            }
+        }
     }
 }
