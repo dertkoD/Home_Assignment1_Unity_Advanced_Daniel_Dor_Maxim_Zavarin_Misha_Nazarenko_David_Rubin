@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GameMenuManager : MonoBehaviour
+public partial class GameMenuManager : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject startMenuPanel;
@@ -11,6 +11,8 @@ public class GameMenuManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Button startButton;
     [SerializeField] private TextMeshProUGUI instructionsText;
+    
+    [SerializeField] private TextMeshProUGUI victoryText; 
 
     [Header("Game Systems")]
     [SerializeField] private CursorAgentMovement raceManager;
@@ -36,6 +38,8 @@ public class GameMenuManager : MonoBehaviour
         Debug.Assert(instructionsText != null, "InstructionsText not assigned");
         Debug.Assert(raceManager != null, "RaceManager not assigned");
         Debug.Assert(cameraRail != null, "CameraRail not assigned");
+        // Проверка нового поля
+        Debug.Assert(victoryText != null, "VictoryText not assigned");
     }
 
     private void InitializeMenu()
@@ -44,6 +48,9 @@ public class GameMenuManager : MonoBehaviour
 
         startMenuPanel.SetActive(true);
         gameHUD.SetActive(false);
+        
+       
+        victoryText.text = ""; 
 
         raceManager.SetGameActive(false);
         cameraRail.SetGameActive(false);
@@ -53,6 +60,39 @@ public class GameMenuManager : MonoBehaviour
 
         SetInstructionsText();
     }
+
+  
+    public void OnAgentReachedGoal(string agentName)
+    {
+        if (victoryText != null)
+        {
+            victoryText.text = agentName + " Win!";
+          
+            raceManager.SetGameActive(false);
+            Debug.Log("Winner: " + agentName);
+        }
+    }
+
+    public void StartGame()
+    {
+        if (isGameStarted) return;
+
+        isGameStarted = true;
+        startMenuPanel.SetActive(false);
+        gameHUD.SetActive(true);
+        victoryText.text = ""; 
+
+        raceManager.SetGameActive(true);
+        cameraRail.SetGameActive(true);
+    }
+
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public bool IsGameStarted() => isGameStarted;
 
     private void SetInstructionsText()
     {
@@ -68,28 +108,4 @@ public class GameMenuManager : MonoBehaviour
             "Avoid moving obstacles\n\n" +
             "Click START to begin";
     }
-
-    public void StartGame()
-    {
-        if (isGameStarted)
-            return;
-
-        isGameStarted = true;
-
-        startMenuPanel.SetActive(false);
-        gameHUD.SetActive(true);
-
-        raceManager.SetGameActive(true);
-        cameraRail.SetGameActive(true);
-
-        Debug.Log("Game Started");
-    }
-
-    public void RestartGame()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public bool IsGameStarted() => isGameStarted;
 }
