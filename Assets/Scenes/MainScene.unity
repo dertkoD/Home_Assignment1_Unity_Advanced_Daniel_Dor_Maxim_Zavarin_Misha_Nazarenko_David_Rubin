@@ -283,8 +283,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 384741526}
   - {fileID: 1978861688}
+  - {fileID: 384741526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 253598846}
   - component: {fileID: 253598845}
   m_Layer: 5
-  m_Name: TitleText (TMP)
+  m_Name: VictoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1120,7 +1120,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 0, y: 520}
   m_SizeDelta: {x: 800, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &421268858
@@ -2289,6 +2289,7 @@ MonoBehaviour:
   gameHUD: {fileID: 384741525}
   startButton: {fileID: 1373678376}
   instructionsText: {fileID: 421268858}
+  victoryText: {fileID: 253598845}
   raceManager: {fileID: 500111279}
   cameraRail: {fileID: 330585548}
 --- !u!4 &1166268644
@@ -2645,7 +2646,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1373678377}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1166268643}
+        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1373678377
 MonoBehaviour:
   m_ObjectHideFlags: 0
