@@ -14,10 +14,14 @@ public class CameraRail : MonoBehaviour
     [Range(0f, 1f)] public float t = 0f;
 
     float _tVel;
+    private bool isGameActive = true; // Game activity flag
 
     void Update()
     {
         if (!startPoint || !endPoint) return;
+        
+        // Check if game is active
+        if (!isGameActive) return;
 
         float input = 0f;
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) input += 1f;
@@ -38,6 +42,17 @@ public class CameraRail : MonoBehaviour
         t = Mathf.SmoothDamp(t, targetT, ref _tVel, smoothTime);
 
         transform.position = Vector3.Lerp(startPoint.position, endPoint.position, t);
+    }
+    
+    // Method to control game activity
+    public void SetGameActive(bool active)
+    {
+        isGameActive = active;
+    }
+    
+    public bool IsGameActive()
+    {
+        return isGameActive;
     }
 
     void OnDrawGizmos()

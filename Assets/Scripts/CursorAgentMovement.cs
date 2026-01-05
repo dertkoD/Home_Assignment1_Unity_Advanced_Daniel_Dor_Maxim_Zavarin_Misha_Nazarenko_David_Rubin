@@ -12,6 +12,7 @@ public class CursorAgentMovement : MonoBehaviour
 
     private HashSet<NavMeshAgent> arrivedAgents = new(); // registry of arrived agents
     private bool hasClicked;
+    private bool isGameActive = true; // Game activity flag
 
     private void Start()
     {
@@ -23,6 +24,9 @@ public class CursorAgentMovement : MonoBehaviour
 
     void Update()
     {
+        // Check if game is active
+        if (!isGameActive) return;
+        
         if (CheckAgentsEnabled())
         {
             //Mouse destination setting
@@ -40,6 +44,17 @@ public class CursorAgentMovement : MonoBehaviour
             if (hasClicked) CheckArrival();
         }
        
+    }
+    
+    // Method to control game activity (called from GameMenuManager)
+    public void SetGameActive(bool active)
+    {
+        isGameActive = active;
+    }
+    
+    public bool IsGameActive()
+    {
+        return isGameActive;
     }
 
     //Set destination foreach agent
