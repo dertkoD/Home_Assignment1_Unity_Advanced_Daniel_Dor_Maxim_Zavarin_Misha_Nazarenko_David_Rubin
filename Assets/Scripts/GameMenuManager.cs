@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public partial class GameMenuManager : MonoBehaviour
+public class GameMenuManager : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject startMenuPanel;
@@ -38,7 +38,6 @@ public partial class GameMenuManager : MonoBehaviour
         Debug.Assert(instructionsText != null, "InstructionsText not assigned");
         Debug.Assert(raceManager != null, "RaceManager not assigned");
         Debug.Assert(cameraRail != null, "CameraRail not assigned");
-        // Проверка нового поля
         Debug.Assert(victoryText != null, "VictoryText not assigned");
     }
 
@@ -85,14 +84,6 @@ public partial class GameMenuManager : MonoBehaviour
         raceManager.SetGameActive(true);
         cameraRail.SetGameActive(true);
     }
-
-    public void RestartGame()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public bool IsGameStarted() => isGameStarted;
 
     private void SetInstructionsText()
     {

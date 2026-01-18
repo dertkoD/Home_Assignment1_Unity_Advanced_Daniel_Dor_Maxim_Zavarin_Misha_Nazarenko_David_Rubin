@@ -49,11 +49,6 @@ public class CameraRail : MonoBehaviour
     {
         isGameActive = active;
     }
-    
-    public bool IsGameActive()
-    {
-        return isGameActive;
-    }
 
     void OnDrawGizmos()
     {
